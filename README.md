@@ -2,8 +2,7 @@
 This is a taxi management project. 这是一个出租车公司管理系统的C++小组作业。
 
 管理员账号和密码都是：admin
-功能自己探索吧，输入上面因为时间紧急所以没有将所有的cin>>做替换。
-只有在管理员账号登录和别的一些地方用到了自己写的enter函数来代替了cin>>
+功能自己探索吧，输入上面将所有的cin>>替换为自己定义的输入函数，避免了所有输入引起的bug。
 
 The account number of the administrator is ‘admin’ and the password is ‘admin’.
 
