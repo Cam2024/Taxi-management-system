@@ -230,17 +230,20 @@ int admin_login()
 int admin::driver_login(string& temp_id)
 {
 	//driver login
-	string temp_password;
+	char temp[12];
+	char temp_pw[12];
+	memset(temp, '\0', sizeof(temp));
+	memset(temp_pw, '\0', sizeof(temp_pw));
 	char ch;
 	int a = 1;
 	chart();
 	if (tax.empty())
 	{
-		gotoxy(7, 35);
+		gotoxy(7, 32);
 		cout << "No driver information!!!";
-		gotoxy(9, 35);
+		gotoxy(9, 32);
 		cout << "Please wait for the administrator to enter the information.";
-		gotoxy(18, 35);
+		gotoxy(18, 32);
 		cout << "Press Enter to continue...";
 		getch();
 		return 1;
@@ -254,9 +257,22 @@ int admin::driver_login(string& temp_id)
 	gotoxy(14, 34);
 	cout << "Press Enter to continue...";
 	gotoxy(7, 60);
-	cin >> temp_id;
+	enter(temp, 10, 1);
+	int count = 0;
+	for (int i = 0; temp[i] != '\0'; i++)
+	{
+		count = count + 1;
+	}
+	string temp_1(temp, count);
+	temp_id = temp_1;
 	gotoxy(9, 62);
-	cin >> temp_password;
+	enter(temp_pw, 10, 0);
+	count = 0;
+	for (int i = 0; temp_pw[i] != '\0'; i++)
+	{
+		count = count + 1;
+	}
+	string temp_password(temp_pw, count);
 	vector<taxi>::iterator iter; //Create a vector iterator for the taxi class
 	for (iter = this->tax.begin(); iter != this->tax.end(); iter++)
 	{
@@ -345,13 +361,32 @@ void admin::add_car() //add a taxi information
 	gotoxy(9, 34);
 	cout << "Please input a full name of driver 1: ";
 	gotoxy(11, 34);
-	cout << "Please input a full name of driver 2: ";
+	cout << "Please input a full name of driver 2(Optional): ";
 	gotoxy(13, 34);
 	cout << "Please enter the car type: ";
 	gotoxy(15, 34);
 	cout << "Please set a password: ";
 	gotoxy(7, 58);
-	cin >> t.car_id;
+	int count = 0;
+	char temp[12];
+	memset(temp, '\0', sizeof(temp));
+	enter(temp, 10, 1);
+	for (int i = 0; temp[i] != '\0'; i++)
+	{
+		count = count + 1;
+	}
+	if (count == 0)
+	{
+		cout << "A car ID is necessary!!!";
+		gotoxy(18, 34);
+		cout << "Press any key to return...";
+		getch();
+		system("cls");
+		return;
+
+	}
+	string temp_1(temp, count);
+	t.car_id = temp_1;
 	vector<taxi>::iterator iter;
 	for (iter = this->tax.begin(); iter != this->tax.end(); iter++)
 	{
@@ -367,11 +402,29 @@ void admin::add_car() //add a taxi information
 		}
 	}
 	gotoxy(9, 72);
-	cin >> t.name_1;
-	gotoxy(11, 72);
+	count = 0;
+	memset(temp, '\0', sizeof(temp));
+	enter(temp, 10, 1);
+	for (int i = 0; temp[i] != '\0'; i++)
+	{
+		count = count + 1;
+	}
+	if (count == 0)
+	{
+		gotoxy(10, 64);
+		cout << "A driver is necessary!!!";
+		gotoxy(18, 34);
+		cout << "Press any key to return...";
+		getch();
+		system("cls");
+		return;
+	}
+	string temp_2(temp, count);
+	t.name_1 = temp_2;
+	gotoxy(11, 82);
 	char temp_name[12];
 	memset(temp_name, '\0', sizeof(temp_name));
-	enter(temp_name, 9, 1);
+	enter(temp_name, 10, 1);
 	string name = "                ";
 	if (temp_name[0] == '\0')
 	{
@@ -386,9 +439,42 @@ void admin::add_car() //add a taxi information
 	}
 	t.name_2 = name;
 	gotoxy(13, 61);
-	cin >> t.car_type;
+	count = 0;
+	memset(temp, '\0', sizeof(temp));
+	enter(temp, 10, 1);
+	for (int i = 0; temp[i] != '\0'; i++)
+	{
+		count = count + 1;
+	}
+	if (count == 0)
+	{
+		string temp_3 = "Classic";
+		t.car_type = temp_3;
+	}
+	else
+	{
+		string temp_3(temp, count);
+		t.car_type = temp_3;
+	}
 	gotoxy(15, 58);
-	cin >> t.password;
+	count = 0;
+	memset(temp, '\0', sizeof(temp));
+	enter(temp, 10, 1);
+	for (int i = 0; temp[i] != '\0'; i++)
+	{
+		count = count + 1;
+	}
+	if (count == 0)
+	{
+		cout << "A password is necessary!!!";
+		gotoxy(18, 34);
+		cout << "Press any key to return...";
+		getch();
+		system("cls");
+		return;
+	}
+	string temp_4(temp, count);
+	t.password = temp_4;
 	gotoxy(18, 34);
 	cout << "Press Enter to continue...";
 	getch();
@@ -423,8 +509,17 @@ void admin::edit_car() //edit a taxi information
 	}
 	string temp_id;
 	gotoxy(4, 31);
-	cout << "Input Car ID: "; 
-	cin >> temp_id;
+	cout << "Input Car ID: ";
+	int count = 0;
+	char temp[12];
+	memset(temp, '\0', sizeof(temp));
+	enter(temp, 10, 1);
+	for (int i = 0; temp[i] != '\0'; i++)
+	{
+		count = count + 1;
+	}
+	string temp_1(temp, count);
+	temp_id = temp_1;
 	vector<taxi>::iterator iter;
 	for (iter = this->tax.begin(); iter != this->tax.end(); iter++) 
 	{
@@ -447,7 +542,25 @@ void admin::edit_car() //edit a taxi information
 			gotoxy(16, 34);
 			cout << "Please enter the Punishments index: ";
 			gotoxy(7, 72);
-			cin >> iter->name_1;
+			count = 0;
+			memset(temp, '\0', sizeof(temp));
+			enter(temp, 10, 1);
+			for (int i = 0; temp[i] != '\0'; i++)
+			{
+				count = count + 1;
+			}
+			if (count == 0)
+			{
+				gotoxy(9, 64);
+				cout << "A driver is necessary!!!";
+				gotoxy(18, 34);
+				cout << "Press any key to return...";
+				getch();
+				system("cls");
+				return;
+			}
+			string temp_2(temp, count);
+			iter->name_1 = temp_2;
 			gotoxy(8, 82);
 			enter(temp_name, 9, 1);
 			string name = "NULL           ";
@@ -457,11 +570,79 @@ void admin::edit_car() //edit a taxi information
 			}
 			iter->name_2 = name;
 			gotoxy(10, 58);
-			cin >> iter->car_id;
+			count = 0;
+			memset(temp, '\0', sizeof(temp));
+			enter(temp, 10, 1);
+			for (int i = 0; temp[i] != '\0'; i++)
+			{
+				count = count + 1;
+			}
+			if (count == 0)
+			{
+				cout << "A driver is necessary!!!";
+				gotoxy(18, 34);
+				cout << "Press any key to return...";
+				getch();
+				system("cls");
+				return;
+			}
+			string temp_3(temp, count);
+			vector<taxi>::iterator iter_1;
+			for (iter_1 = this->tax.begin(); iter_1 != this->tax.end(); iter_1++)
+			{
+				if (temp_id == temp_3)
+				{
+					break;
+				}
+				if (iter_1->car_id == temp_3)
+				{
+					gotoxy(17, 34);
+					cout << "The taxi already exists!!!";
+					gotoxy(18, 34);
+					cout << "Press any key to return...";
+					getch();
+					system("cls");
+					return;
+				}
+			}
+			iter->car_id = temp_3;
 			gotoxy(11, 61);
-			cin >> iter->car_type;
+			count = 0;
+			memset(temp, '\0', sizeof(temp));
+			enter(temp, 10, 1);
+			for (int i = 0; temp[i] != '\0'; i++)
+			{
+				count = count + 1;
+			}
+			if (count == 0)
+			{
+				string temp_4 = "Classic";
+				iter->car_type = temp_4;
+			}
+			else
+			{
+				string temp_4(temp, count);
+				iter->car_type = temp_4;
+			}
 			gotoxy(12, 58);
-			cin >> iter->password;
+			count = 0;
+			memset(temp, '\0', sizeof(temp));
+			enter(temp, 10, 1);
+			for (int i = 0; temp[i] != '\0'; i++)
+			{
+				count = count + 1;
+			}
+			if (count == 0)
+			{
+				cout << "A driver is necessary!!!";
+				gotoxy(18, 34);
+				cout << "Press any key to return...";
+				getch();
+				system("cls");
+				return;
+			}
+			string temp_5(temp, count);
+			iter->password = temp_5;
 			gotoxy(14, 64);
 			enter(temp_income, 7, 6);
 			iter->total_income = transf(temp_income);
@@ -502,8 +683,17 @@ void admin::search_car() //search a taxi information
 	}
 	string id;
 	gotoxy(4, 31);
-	cout << "Input  Car ID: "; 
-	cin >> id;
+	cout << "Input Car ID: "; 
+	int count = 0;
+	char temp[12];
+	memset(temp, '\0', sizeof(temp));
+	enter(temp, 10, 1);
+	for (int i = 0; temp[i] != '\0'; i++)
+	{
+		count = count + 1;
+	}
+	string temp_1(temp, count);
+	id = temp_1;
 	vector<taxi>::iterator iter;
 	for (iter = this->tax.begin(); iter != this->tax.end(); iter++)
 	{
@@ -528,6 +718,7 @@ void admin::search_car() //search a taxi information
 			gotoxy(18, 34);
 			cout << "Press Enter to continue...";
 			getch();
+			system("cls");
 			return;
 		}
 	}
@@ -555,8 +746,17 @@ void admin::del_car() //delete a taxi information
 	}
 	string temp_id;
 	gotoxy(7, 35);
-	cout << "Input  ID:  "; 
-	cin >> temp_id;
+	cout << "Input Car ID:  "; 
+	int count = 0;
+	char temp[12];
+	memset(temp, '\0', sizeof(temp));
+	enter(temp, 10, 1);
+	for (int i = 0; temp[i] != '\0'; i++)
+	{
+		count = count + 1;
+	}
+	string temp_1(temp, count);
+	temp_id = temp_1;
 	vector<taxi>::iterator iter;
 	for (iter = this->tax.begin(); iter != this->tax.end();iter++)
 	{
@@ -597,6 +797,13 @@ void admin::add_records(string& temp_id) //add a income and r&p record
 	{
 		if (iter->car_id == temp_id) 
 		{
+			chart();
+			gotoxy(7, 34);
+			cout << "Please tell the driver your destination...";
+			gotoxy(9, 34);
+			cout << "Press enter when you are ready!!!";
+			getch();
+			system("cls");
 			chart();
 			gotoxy(7, 34);
 			cout << "Driving...";
