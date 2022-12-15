@@ -1,9 +1,5 @@
 # Taxi-company-management-system
-This is a taxi management project. 这是一个出租车公司管理系统的C++小组作业。
-
-管理员账号和密码都是：admin
-功能自己探索吧，输入上面将所有的cin>>替换为自己定义的输入函数，避免了所有输入引起的bug。
-
+This is a taxi management project. 
 The account number of the administrator is ‘admin’ and the password is ‘admin’.
 
 	Administrator login:
